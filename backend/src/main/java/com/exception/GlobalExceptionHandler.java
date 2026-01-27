@@ -34,6 +34,46 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
     
+    @ExceptionHandler(EncuestaNoEncontradaException.class)
+    public ResponseEntity<ErrorResponse> handleEncuestaNoEncontrada(EncuestaNoEncontradaException ex) {
+        ErrorResponse error = new ErrorResponse(
+            HttpStatus.NOT_FOUND.value(),
+            ex.getMessage(),
+            LocalDateTime.now()
+        );
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
+    
+    @ExceptionHandler(PreguntaNoEncontradaException.class)
+    public ResponseEntity<ErrorResponse> handlePreguntaNoEncontrada(PreguntaNoEncontradaException ex) {
+        ErrorResponse error = new ErrorResponse(
+            HttpStatus.NOT_FOUND.value(),
+            ex.getMessage(),
+            LocalDateTime.now()
+        );
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
+    
+    @ExceptionHandler(RespuestaEncuestaNoEncontradaException.class)
+    public ResponseEntity<ErrorResponse> handleRespuestaEncuestaNoEncontrada(RespuestaEncuestaNoEncontradaException ex) {
+        ErrorResponse error = new ErrorResponse(
+            HttpStatus.NOT_FOUND.value(),
+            ex.getMessage(),
+            LocalDateTime.now()
+        );
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
+    
+    @ExceptionHandler(EncuestaInactivaException.class)
+    public ResponseEntity<ErrorResponse> handleEncuestaInactiva(EncuestaInactivaException ex) {
+        ErrorResponse error = new ErrorResponse(
+            HttpStatus.BAD_REQUEST.value(),
+            ex.getMessage(),
+            LocalDateTime.now()
+        );
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
+    
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, Object>> handleValidationExceptions(MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();

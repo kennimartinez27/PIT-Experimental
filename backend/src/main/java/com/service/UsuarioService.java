@@ -55,6 +55,27 @@ public class UsuarioService {
         return mapearAResponse(usuario);
     }
     
+    // Método para buscar usuarios por nombre y/o rol
+    public List<UsuarioResponse> buscarUsuarios(String nombre, String rol) {
+        return usuarioRepository.findAll().stream()
+                .filter(usuario -> {
+                    boolean coincideNombre = nombre == null || nombre.trim().isEmpty() || 
+                            usuario.getNombreCompleto().toLowerCase().contains(nombre.toLowerCase());
+                    
+                    boolean coincideRol = true;
+                    if (rol != null && !rol.trim().isEmpty()) {
+                        try {
+                            coincideRol = usuario.getRol().name().equalsIgnoreCase(rol.trim());
+                        } catch (Exception e) {
+                            coincideRol = false;
+                        }
+                    }
+                    
+                    return coincideNombre && coincideRol;
+                })
+                .map(this::mapearAResponse)
+                .collect(Collectors.toList());
+    }
 
     // Método privado para mapear Usuario a UsuarioResponse
     private UsuarioResponse mapearAResponse(Usuario usuario) {
